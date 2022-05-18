@@ -1,0 +1,195 @@
+#chckoutPage {
+    padding: 40px 0px 120px 0px;
+
+    .container {
+        .row {
+            .col-12 {
+                .pageHeader {
+                    display: flex;
+                    list-style-type: none;
+                    padding: unset;
+
+                    li {
+                        margin-right: 10px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        a {
+                            text-decoration: none;
+                            color: $text-black;
+                            font-weight: 500;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+
+                            i {
+                                font-size: 12px;
+                                margin-left: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .col-9 {
+                span {
+                    font-size: 24px;
+                    font-weight: 500;
+                    display: inline-block;
+                }
+
+                .steps {
+                    width: 600px;
+                    margin-top: 32px;
+                    .formSteps {
+                        border-top: 1px solid rgba(130, 130, 130, 1);
+
+                        .title_formsteps {
+                            padding: 32px 0px;
+                            display: flex;
+                            justify-content: space-between;
+                            
+                            button{
+                                background: transparent;
+                                border: unset;
+                                font-weight: 500;
+                                color: rgba(45, 156, 219, 1);
+                            }
+
+                            h2 {
+                                font-size: 20px;
+                                font-weight: 500;
+                            }
+                        }
+
+                        .body_formsteps {
+                            margin-bottom: 32px;
+                            .form {
+                                label {
+                                    margin-bottom: 8px;
+                                    font-weight: 500;
+                                    color: $text-gray;
+                                }
+
+                                input,
+                                textarea {
+                                    background-color: rgba(242, 242, 242, 1);
+                                    padding: 12px 16px;
+                                    border-radius: 8px;
+                                    color: rgba(130, 130, 130, 1);
+                                    border: unset;
+                                }
+
+                                textarea {
+                                    resize: none;
+                                    height: 80px;
+                                }
+
+                                .phonenumberinput {
+                                    display: flex;
+
+                                    input {
+                                        margin-bottom: unset;
+                                        border: unset;
+                                        border-top-left-radius: unset;
+                                        border-bottom-left-radius: unset;
+                                    }
+
+                                    select {
+                                        border: unset;
+                                        padding: 12px 16px;
+                                        border-top-left-radius: 8px;
+                                        border-bottom-left-radius: 8px;
+                                        background-color: rgba(242, 242, 242, 1);
+                                        color: rgba(130, 130, 130, 1);
+
+                                        &:focus-visible {
+                                            outline: none;
+                                        }
+                                    }
+
+
+                                }
+
+                                .save_btn {
+                                    padding: 12px 48px;
+                                    background-color: $text-green;
+                                    border: unset;
+                                    border-radius: 8px;
+                                    color: white;
+                                    margin-top: 48px;
+                                }
+
+                                .pay_type_btns {
+                                    display: flex;
+                                    justify-content: space-around;
+
+                                    button {
+                                        background-color: white;
+                                        border-radius: 8px;
+                                        border: 1px solid rgba(224, 224, 224, 1);
+                                        padding: 12px 40px;
+                                    }
+
+                                    .active_payTypeBtn{
+                                        border: 1px solid rgba(130, 130, 130, 1);
+                                        background: rgba(242, 242, 242, 1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    #stepOneData,#stepTwoData{
+                        padding-left: 24px;
+                        p{
+                            margin: 8px;
+                            font-weight: 500;
+                        }
+                        margin-bottom: 32px;
+                    }
+                }
+            }
+
+            .col-3 {
+                .common-amounts {
+                    width: 280px;
+                    padding: 32px 24px;
+                    box-shadow: 0px 4px 32px 0px rgba(130, 130, 130, 0.08);
+                    border-radius: 8px;
+
+                    p {
+                        font-size: 20px;
+                        font-weight: 500;
+                    }
+
+                    .amount {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 16px;
+
+                        span {
+                            font-size: 16px;
+                        }
+                    }
+
+                    .total {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 16px;
+
+                        span {
+                            font-size: 16px;
+                            font-weight: 500;
+                        }
+
+                        span:nth-child(2) {
+                            color: $text-red;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

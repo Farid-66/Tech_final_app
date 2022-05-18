@@ -1,0 +1,169 @@
+#login_register_page {
+  padding: 95px 0px 170px;
+
+  .container {
+    .row {
+      .left {
+        padding: 0px 155px;
+
+        .col-12 {
+          h3 {
+            font-size: 20px;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 40px;
+          }
+
+          div {
+            display: flex;
+            justify-content: space-between;
+
+            button {
+              padding: unset;
+              border: unset;
+              background: transparent;
+              display: flex;
+              align-items: center;
+              font-size: 13px;
+              font-weight: 500;
+              color: rgba(79, 79, 79, 1);
+
+              span {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-right: 8px;
+              }
+            }
+
+            button:nth-child(1) {
+              span {
+                background: rgba(66, 103, 178, 1);
+              }
+            }
+
+            button:nth-child(2) {
+              span:nth-child(1) {
+                background: rgba(219, 68, 55, 1);
+              }
+            }
+          }
+
+          p {
+            font-weight: 500;
+            color: rgba(189, 189, 189, 1);
+            text-align: center;
+            margin: 32px 0px 24px;
+          }
+        }
+
+        label {
+          margin-bottom: 8px;
+          font-weight: 500;
+          color: $text-gray;
+        }
+
+        input {
+          background-color: rgba(242, 242, 242, 1);
+          padding: 12px 16px;
+          border-radius: 8px;
+          color: rgba(130, 130, 130, 1);
+          border: unset;
+        }
+
+        .form-check-input {
+          padding: unset;
+          border-radius: unset;
+          color: unset;
+          width: 24px;
+          height: 24px;
+          border-radius: 8px;
+          background-color: white;
+          border: 1px solid rgba(224, 224, 224, 1) ;
+        }
+
+        .phonenumberinput {
+          display: flex;
+
+          input {
+            margin-bottom: unset;
+            border: unset;
+            border-top-left-radius: unset;
+            border-bottom-left-radius: unset;
+          }
+
+          select {
+            border: unset;
+            padding: 12px 16px;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+            background-color: rgba(242, 242, 242, 1);
+            color: rgba(130, 130, 130, 1);
+
+            &:focus-visible {
+              outline: none;
+            }
+          }
+        }
+
+        .password_input {
+          position: relative;
+
+          span {
+            position: absolute;
+            right: 15px;
+            top: 45px;
+            color: rgba(130, 130, 130, 1);
+            cursor: pointer;
+          }
+        }
+
+        a {
+          margin-top: 8px;
+          text-decoration: none;
+          display: inline-block;
+          width: 100%;
+          text-align: end;
+          color: $text-blue;
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        .login_btn {
+          background-color: $text-green;
+          width: 100%;
+          border-radius: 8px;
+          border: unset;
+          color: white;
+          padding: 12px 0px;
+          margin-top: 24px;
+        }
+      }
+
+      .right {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+        img {
+          width: 500px;
+          height: 350px;
+        }
+
+        P {
+          margin-top: 32px;
+          text-align: center;
+
+          a {
+            color: $text-blue;
+            font-weight: 500;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}
