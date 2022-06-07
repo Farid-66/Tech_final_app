@@ -11,10 +11,12 @@ import Checkout from './page/Cart/Checkout';
 import { useState, useEffect } from 'react';
 import Login from './page/Register/Login'
 import Register from './page/Register/Register'
+import Favourite from './page/Favourite/Favourite';
 import Changepass from './page/Register/Changepass';
+import Profile from './page/Profile/Profile';
+import Swal from 'sweetalert2'
 
 function App() {
-
   // Cart==============================
 
   const [cart, setCart] = useState({});
@@ -25,15 +27,48 @@ function App() {
     })
   }
 
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3500,
+    timerProgressBar: false
+  })
+
   const handleAddToCart = (productId, quantity) => {
     commerce.cart.add(productId, quantity).then((item) => {
       setCart(item.cart);
+      Toast.fire({
+        icon: 'success',
+        title: `${item.product_name} Səbətə Əlavə edildi`
+      })
     })
   }
 
+
+
   const handleRemoveFromCart = (lineItemId) => {
-    commerce.cart.remove(lineItemId).then((resp) => {
-      setCart(resp.cart);
+    Swal.fire({
+      title: 'Əminsən?',
+      text: "Bunu geri qaytara bilməyəcəksiniz!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Xeyir',
+      confirmButtonText: 'Bəli!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        commerce.cart.remove(lineItemId).then((resp) => {
+          setCart(resp.cart);
+          Swal.fire(
+            'Silindi!',
+            '',
+            'success'
+          )
+        })
+      }
     })
   }
 
@@ -43,12 +78,14 @@ function App() {
     })
   }
 
-  // console.log(cart)
 
   useEffect(() => {
     fetchCart();
   }, []);
   // ====================================================
+
+
+
 
   return (
     <div className="App">
@@ -68,6 +105,8 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="changepassword" element={<Changepass />} />
             <Route path="register" element={<Register />} />
+            <Route path="favourite" element={<Favourite />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="checkout/" element={<Checkout cart={cart} />} />
             <Route path="prducts/:productsId" element={<Details addToCart={handleAddToCart} />} />
           </Route>

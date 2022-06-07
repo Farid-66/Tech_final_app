@@ -1,7 +1,7 @@
 #detailsPage {
-    .container {
-        padding: 30px 0px;
+    padding: 30px 0px;
 
+    .container {
         .row {
             .col-12 {
                 .pageHeader {
@@ -32,7 +32,20 @@
                 }
             }
 
-            // .detail-image {}
+            .detail-image {
+                .slider-images{
+                    height: 550px; 
+                    display: flex;
+                    align-items: center;
+                    justify-content: center; 
+                }
+
+                .slider-image{
+                    width: 500px; 
+                    background-color: #fff; 
+                    padding: 20px;
+                }
+            }
 
             .detail-text {
                 h3 {
@@ -40,16 +53,17 @@
                     font-weight: 500;
                 }
 
-                .comment_stars{
+                .comment_stars {
                     margin: 16px 0px 20px 0px;
-                    span{
-                        border-right: 2px solid rgba(242, 242, 242, 1) ;
+
+                    span {
+                        border-right: 2px solid rgba(242, 242, 242, 1);
                         padding-right: 8px;
-                        margin:0px 10px;
+                        margin: 0px 10px;
                     }
 
-                    p{
-                        color:rgba(45, 156, 219, 1);
+                    p {
+                        color: rgba(45, 156, 219, 1);
                         font-weight: 500;
                         display: inline-block;
                     }
@@ -81,7 +95,7 @@
                         height: 25px;
                         border-radius: 50%;
                         margin-right: 15px;
-                        border:1px solid rgba(224, 224, 224, 1);
+                        border: 1px solid rgba(224, 224, 224, 1);
                     }
                 }
 
@@ -101,9 +115,10 @@
                     }
                 }
 
-                .quantity{
+                .quantity {
                     margin-bottom: 50px;
-                    button{
+
+                    button {
                         font-size: 14px;
                         border: unset;
                         background-color: rgba(242, 242, 242, 1);
@@ -112,14 +127,15 @@
                         height: 32px;
                         border-radius: 50%;
                     }
-                    span{
+
+                    span {
                         font-size: 20px;
                         margin: 0px 30px;
                     }
                 }
 
-                .addtocart{
-                    button{
+                .addtocart {
+                    button {
                         padding: 8px 30px;
                         border: unset;
                         background-color: $text-green;
@@ -129,16 +145,17 @@
                         display: flex;
                         align-items: center;
 
-                        svg{
+                        svg {
                             margin-right: 16px;
                         }
                     }
                 }
             }
 
-            .tech_comment_btns{
+            .tech_comment_btns {
                 margin-top: 90px;
-                button{
+
+                button {
                     background-color: transparent;
                     border: unset;
                     margin: 0px 160px 0px 16px;
@@ -147,7 +164,7 @@
                     color: rgba(189, 189, 189, 1);
                 }
 
-                .active_btn{
+                .active_btn {
                     color: $text-black;
                     border-bottom: 2px solid $text-green;
                 }
@@ -156,20 +173,22 @@
     }
 
 
-    .techSpecifications{
+    .techSpecifications {
         margin-bottom: 150px;
-        .col-6:nth-child(1){
+
+        .col-12:nth-child(1) {
             padding: 0px 80px;
 
-            h3{
+            h3 {
                 font-size: 20px;
                 font-weight: 500;
                 margin-bottom: 24px;
             }
 
-            ul{
+            ul {
                 list-style-type: none;
-                li{
+
+                li {
                     width: 100%;
                     display: flex;
                     justify-content: space-between;
@@ -179,14 +198,14 @@
             }
         }
 
-        .col-6:nth-child(2){
-            h3{
+        .col-12:nth-child(2) {
+            h3 {
                 font-size: 20px;
                 font-weight: 500;
                 margin-bottom: 26px;
             }
 
-            p{
+            p {
                 font-size: 16px;
                 padding-left: 14px;
                 line-height: 24px;
@@ -195,56 +214,61 @@
         }
     }
 
-    .commentPage{
+    .commentPage {
         margin-bottom: 150px;
-        .row{
-            .col-12{
-                .commentItems{
+
+        .row {
+            .col-12 {
+                .commentItems {
                     list-style-type: none;
                     padding: unset;
-                    
-                    .commentItem{
+
+                    .commentItem {
                         border-bottom: 1px solid rgba(189, 189, 189, 1);
                         padding-bottom: 32px;
                         margin-bottom: 32px;
                         display: flex;
-                        
-                        .left{
+
+                        .left {
                             width: 800px;
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             flex-direction: column;
-                            p{
+
+                            p {
                                 font-size: 72px;
                             }
 
-                            i{
-                                margin-right:12px;
+                            i {
+                                margin-right: 12px;
                             }
                         }
-                        .right{
+
+                        .right {
                             border-left: 1px solid rgba(189, 189, 189, 1);
                             padding: 0px 32px;
 
-                            .commentItemHeader{
+                            .commentItemHeader {
                                 display: flex;
                                 justify-content: space-between;
                                 margin-bottom: 16px;
-                                p{
+
+                                p {
                                     font-size: 20px;
                                     font-weight: 500;
-                                    margin:unset;
+                                    margin: unset;
                                 }
 
-                                span, small{
+                                span,
+                                small {
                                     font-size: 12px;
                                     color: $text-gray;
                                 }
                             }
 
-                            .commentItemBody{
-                                p{
+                            .commentItemBody {
+                                p {
                                     font-size: 16px;
                                     line-height: 24px;
                                     color: $text-gray;
@@ -254,40 +278,42 @@
                     }
                 }
 
-                .commentForm{
+                .commentForm {
                     display: flex;
                     align-items: center;
                     flex-direction: column;
 
-                    h4{
-                        margin: 45px 0px; 
+                    h4 {
+                        margin: 45px 0px;
                         font-size: 20px;
                         font-weight: 500;
                     }
 
-                    form{
+                    form {
                         width: 800px;
 
-                        label{
+                        label {
                             margin-bottom: 8px;
                             font-weight: 500;
                             color: $text-gray;
                         }
 
-                        input, select, textarea{
+                        input,
+                        select,
+                        textarea {
                             background-color: rgba(242, 242, 242, 1);
                             padding: 12px 16px;
                             border-radius: 8px;
                             color: rgba(130, 130, 130, 1);
                             margin-bottom: 60px;
-                        } 
+                        }
 
-                        textarea{
+                        textarea {
                             resize: none;
                             height: 150px;
                         }
 
-                        button{
+                        button {
                             float: right;
                             padding: 12px 48px;
                             background-color: $text-green;
@@ -309,7 +335,7 @@
     align-items: center;
     justify-content: center;
 
-    .spinner-border{
+    .spinner-border {
         color: $text-green;
         width: 70px;
         height: 70px;
@@ -340,6 +366,7 @@
 
         &::after {
             font-size: 20px !important;
+            font-weight: 700 !important;
         }
     }
 
@@ -349,6 +376,7 @@
 
         &::after {
             font-size: 20px !important;
+            font-weight: 700 !important;
         }
     }
 }
@@ -375,6 +403,282 @@
             top: 0;
             right: 30px;
             width: 70px;
+        }
+    }
+}
+
+
+
+
+// Moblie screen 
+
+// Small devices 
+@media (max-width: 576px) {
+    #detailsPage {
+        padding: 30px 16px;
+
+        .container {
+            .row {
+
+                .detail-image {
+                    .slider-images{
+                        height: 370px; 
+                        display: flex;
+                        align-items: center;
+                        justify-content: center; 
+                    }
+    
+                    .slider-image{
+                        width: 375px; 
+                        background-color: #fff; 
+                        padding: 20px;
+                    }
+                }
+    
+
+                .detail-text {
+                    position: relative;
+
+                    h3 {
+                        font-size: 16px;
+                    }
+
+                    .comment_stars {
+                        margin-bottom: 10px;
+                    }
+
+                    .colors {
+                        margin-bottom: 30px;
+                        display: flex;
+
+                        p {
+                            font-size: 14px;
+                        }
+                    }
+
+                    .memory {
+                        p {
+                            font-size: 14px;
+                        }
+                    }
+
+                    .quantity {
+                        margin: 20px 0px 0px;
+
+                        p {
+                            display: inline-block;
+                            margin-right: 16px;
+                        }
+                    }
+
+                    .addtocart {
+                        position: absolute;
+                        top: 80px;
+                        right: 12px;
+                    }
+                }
+
+                .tech_comment_btns {
+                    margin-top: 30px;
+                    display: flex;
+
+                    button {
+                        margin: 0px;
+                        font-size: 16px;
+                    }
+
+                    button:nth-child(2) {
+                        margin-left: 50px;
+                    }
+
+                    .active_btn {
+                        color: $text-black;
+                        border-bottom: 2px solid $text-green;
+                    }
+                }
+            }
+        }
+
+
+        .techSpecifications {
+            margin-bottom: 150px;
+
+            .row {
+                display: flex;
+                flex-direction: column-reverse;
+
+                .col-12:nth-child(1) {
+                    padding: 0px;
+
+                    ul {
+                        padding: 0px 16px;
+                    }
+                }
+
+                .col-12:nth-child(2) {
+
+                    p {
+                        text-align: justify;
+                        padding-left:unset;
+                    }
+                }
+            }
+        }
+
+        .commentPage {
+            margin-bottom: 150px;
+
+            .row {
+                .col-12 {
+                    .commentItems {
+                        list-style-type: none;
+                        padding: unset;
+
+                        .commentItem {
+                            border-bottom: 1px solid rgba(189, 189, 189, 1);
+                            padding-bottom: 32px;
+                            margin-bottom: 32px;
+                            display: flex;
+                            flex-direction: column;
+
+                            .left {
+                                width: 100%;
+                                margin-bottom: 24px;
+                                padding: 24px;
+                                border-bottom: 1px solid rgba(189, 189, 189, 1);
+                                p {
+                                    font-size: 56px;
+                                }
+                                i {
+                                    margin-right: 12px;
+                                }
+                            }
+
+                            .right {
+                                border-left: unset;
+                                padding: unset;
+
+                                .commentItemHeader {
+                                    display: flex;
+                                    justify-content: center;
+                                    margin-bottom: 16px;
+
+                                    p {
+                                        text-align: justify;
+                                    }
+
+
+                                    span,
+                                    small {
+                                        text-align: center;
+                                    }
+                                }
+
+                                .commentItemBody {
+                                    p {
+                                        font-size: 16px;
+                                        line-height: 24px;
+                                        color: $text-gray;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .commentForm {
+                        display: flex;
+                        align-items: center;
+                        flex-direction: column;
+
+                        form {
+                            width: 100%; // !change
+
+                            input,
+                            select,
+                            textarea {
+                                margin-bottom: 24px; //! change
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    .loading-detailpage {
+        height: 400px;
+    
+        .spinner-border {
+            color: $text-green;
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+
+    // !====================# ProductIamgesSilder #====================
+
+
+    .product-images-slider {
+        .swiper-slide {
+            padding-top: 100%;
+            overflow: hidden;
+            position: relative;
+            top: 25px;
+
+            img {
+                position: absolute;
+                top: 0;
+                right: 30px;
+                width: 275px;
+            }
+        }
+
+        .swiper-button-prev {
+            left: 0;
+            color: #000;
+
+            &::after {
+                font-size: 15px !important;
+                font-weight: 700 !important;
+            }
+        }
+
+        .swiper-button-next {
+            right: 0;
+            color: #000;
+
+            &::after {
+                font-size: 15px !important;
+                font-weight: 700 !important;
+            }
+        }
+    }
+
+
+    .product-images-slider-thumbs {
+        .swiper-slide {
+            cursor: pointer;
+            border: 1px solid #dddbdb;
+
+            &-thumb-active {
+                border-color: #ff0000;
+            }
+        }
+
+        &-wrapper {
+            width: 100%;
+            padding-top: 100%;
+            overflow: hidden;
+            position: relative;
+
+            img {
+                position: absolute;
+                top: 0;
+                right: 30px;
+                width: 70px;
+            }
         }
     }
 }

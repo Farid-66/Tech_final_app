@@ -75,7 +75,7 @@ export const CartProducts = ({ carttLineItems, subTotal, removeFromCart, updateC
         <>
             <div id='cartproductspage'>
                 <div className='row'>
-                    <div className='col-9'>
+                    <div className='col-12 col-md-9'>
                         <div className='cart-product-items'>
                             <ul>
                                 {
@@ -83,9 +83,9 @@ export const CartProducts = ({ carttLineItems, subTotal, removeFromCart, updateC
                                         <li key={e.id} className='cart-product-item'>
                                             <Link to={`/prducts/${e.product_id}`}>
                                                 <div className='cart-product-item-text'>
-                                                    <img src={e.image.url} />
+                                                    <div className='cart-product-item-img'><img src={e.image.url} /></div>
 
-                                                    <div>
+                                                    <div className='cart-product-item-about'>
                                                         <p>{e.name}</p>
                                                         <span>Rəng: Bənövşəyi</span>
                                                         <b>{e.line_total.formatted_with_code}</b>
@@ -93,11 +93,11 @@ export const CartProducts = ({ carttLineItems, subTotal, removeFromCart, updateC
                                                 </div>
                                             </Link>
                                             <div className="quantity_cart">
-                                                <button  onClick={() => decreaseQty(e.id, e.quantity)}><i class="fa-solid fa-minus"></i></button>
+                                                <button  onClick={() => decreaseQty(e.id, e.quantity)}><i className="fa-solid fa-minus"></i></button>
                                                 <span>{e.quantity}</span>
-                                                <button onClick={() => increaseQty(e.id, e.quantity)}><i class="fa-solid fa-plus"></i></button>
+                                                <button onClick={() => increaseQty(e.id, e.quantity)}><i className="fa-solid fa-plus"></i></button>
                                             </div>
-                                            <button onClick={() => removeFromCart(e.id)}><i class="fa-solid fa-trash-can"></i></button>
+                                            <button className='removeBtn' onClick={() => removeFromCart(e.id)}><i className="fa-solid fa-trash-can"></i></button>
 
                                         </li>
                                     ))
@@ -106,7 +106,7 @@ export const CartProducts = ({ carttLineItems, subTotal, removeFromCart, updateC
                         </div>
                     </div>
 
-                    <div className='col-3 '>
+                    <div className='col-12 col-md-3'>
                         <Amounts subTotal={subTotal} />
                     </div>
                 </div>

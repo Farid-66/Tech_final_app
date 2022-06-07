@@ -19,13 +19,16 @@ nav{
                 }
 
                 .logo{
-                    display: flex;
-                    align-items: center;
-                    span{
-                        color: $text-green;
-                        font-size: 34px;
-                        font-weight: 500;
-                        margin-left: 15px;
+                    a{
+                        display: flex;
+                        align-items: center;
+                        text-decoration: none;
+                        span{
+                            color: $text-green;
+                            font-size: 34px;
+                            font-weight: 500;
+                            margin-left: 15px;
+                        }
                     }
                 }
 
@@ -68,7 +71,7 @@ nav{
                             margin: unset;
                         }
 
-                        .cart{
+                        .cart, .favourite{
                             position: relative;
                             span{
                                 position: absolute;

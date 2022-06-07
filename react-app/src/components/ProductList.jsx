@@ -1,7 +1,17 @@
 import { Outlet, Link } from "react-router-dom";
 import * as Icons from '../assets/Icons/Icons'
-
+import { addToFavourite } from '../Redux/Favourite/favourite-slice.js'
+import { useSelector, useDispatch } from 'react-redux'
 function ProtuctList(props) {
+
+  // Favourite =============
+  const favourite = useSelector((state) => state.favourite)
+  const dispatch = useDispatch()
+  // =======================
+
+
+
+
 
   return (
     <>
@@ -21,11 +31,14 @@ function ProtuctList(props) {
                   <div className="productlist">
                     {props.loading ? (
                       props.products.map((e) => (
-                        <Link key={e.id} to={`/prducts/${e.id}`}>
-                          <div  div className="product-card">
-                            <div className="product-fovarite">
-                              <button>{Icons.heartIcon}</button>
-                            </div>
+                        <div div className="product-card">
+                          <div className="product-fovarite">
+                            <button
+                              onClick={() => dispatch(addToFavourite(e))}>
+                              {favourite.find((prod) => prod.id == e.id) ? Icons.redheartIcon : Icons.heartIcon}
+                            </button>
+                          </div>
+                          <Link key={e.id} to={`/prducts/${e.id}`}>
                             <div className="prodct-img">
                               <img src={e.image.url} alt="not found" />
                             </div>
@@ -35,8 +48,8 @@ function ProtuctList(props) {
                             <div className="prodct-price">
                               <span>{e.price.formatted_with_code}</span>
                             </div>
-                          </div>
-                        </Link>
+                          </Link>
+                        </div>
                       ))
                     ) : (
                       <div className="loading">

@@ -41,15 +41,11 @@ function Products() {
     }
   }
 
-
-
-  console.log(product)
-
-
-
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  console.log(product)
 
   return (
     <>

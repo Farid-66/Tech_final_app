@@ -4,11 +4,11 @@ import { useParams } from 'react-router-dom'
 import commerce from '../../Ecommerce'
 import { Outlet, Link } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
-// import { useSelector } from 'react-redux'
 import { Navigation, Thumbs } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
+
 
 function Details({ addToCart }) {
   const { productsId } = useParams()
@@ -33,10 +33,11 @@ function Details({ addToCart }) {
     setItemQty((qty) => qty += 1)
   }
   const decreaseQty = () => {
-    setItemQty((qty) => qty -= 1 )
+    setItemQty((qty) => qty -= 1)
   }
 
   // =========================================
+
 
 
   // ===============# Comment Page #==========
@@ -116,15 +117,15 @@ function Details({ addToCart }) {
               </div>
 
               <div className="row">
-                <div className="col-6 detail-image">
-                  <div style={{ height: '550px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ width: '500px', backgroundColor: '#fff', padding: '20px' }}>
+                <div className="col-12 col-md-6 detail-image">
+                  <div className='slider-images'>
+                    <div className='slider-image'>
                       <ProductIamgeSlider images={thisProduct.assets} />
                     </div>
                   </div>
                 </div>
 
-                <div className="col-6 detail-text">
+                <div className="col-12 col-md-6 detail-text">
                   <h3 className='prodname'>{thisProduct.name}</h3>
                   <div className='comment_stars'>
                     <i>{Icons.starIcon}</i>
@@ -161,14 +162,15 @@ function Details({ addToCart }) {
                               <span>{e}</span>
                             ))
                           }
-                          <hr />
+                          <hr className='d-none d-md-block' />
                         </>
                       ) : ("")
                     }
                   </div>
 
                   <div className="quantity">
-                    <button className='btn' disabled={item_qty<=1?true:false} onClick={() => decreaseQty()}><i className="fa-solid fa-minus"></i></button>
+                    <p className='d-md-none'>Miqdar:</p>
+                    <button className='btn' disabled={item_qty <= 1 ? true : false} onClick={() => decreaseQty()}><i className="fa-solid fa-minus"></i></button>
                     <span>{item_qty}</span>
                     <button className='btn' onClick={() => increaseQty()}><i className="fa-solid fa-plus"></i></button>
                   </div>
@@ -226,21 +228,23 @@ const TechSpecifications = ({ thisProduct }) => {
 
   return (
     <section id='techSpecifications' className='techSpecifications'>
-      <div className='row'>
-        <div className='col-6'>
-          <h3>Əsas göstəricilər</h3>
-          <ul>
-            {
-              thisProduct.extra_fields.map((e) => (
-                <li><span>{e.name}</span> <span>{e.required ? "Var" : "Məlumat yoxdur"}</span></li>
-              ))
-            }
-          </ul>
-        </div>
-        <div className='col-6'>
-          <div>
-            <h3>Məhsul haqqında</h3>
-            <p dangerouslySetInnerHTML={createMarkup()} />
+      <div className='container'>
+        <div className='row'>
+          <div className='col-12 col-md-6'>
+            <h3>Əsas göstəricilər</h3>
+            <ul>
+              {
+                thisProduct.extra_fields.map((e) => (
+                  <li><span>{e.name}</span> <span>{e.required ? "Var" : "Məlumat yoxdur"}</span></li>
+                ))
+              }
+            </ul>
+          </div>
+          <div className='col-12 col-md-6'>
+            <div>
+              <h3>Məhsul haqqında</h3>
+              <p dangerouslySetInnerHTML={createMarkup()} />
+            </div>
           </div>
         </div>
       </div>
@@ -251,116 +255,118 @@ const TechSpecifications = ({ thisProduct }) => {
 const CommentPage = () => {
   return (
     <section id='commentPage' className='commentPage'>
-      <div className='row'>
-        <div className='col-12'>
-          <ul className='commentItems'>
-            <li className='commentItem'>
-              <div className='left'>
-                <p>4</p>
-                <div>
-                  <i>{Icons.starIconWidth27}</i>
-                  <i>{Icons.starIconWidth27}</i>
-                  <i>{Icons.starIconWidth27}</i>
-                  <i>{Icons.starIconWidth27}</i>
-                  <i>{Icons.starIconWidth27}</i>
-                </div>
-              </div>
-              <div className='right'>
-                <div className='commentItemHeader'>
+      <div className='container'>
+        <div className='row '>
+          <div className='col-12'>
+            <ul className='commentItems'>
+              <li className='commentItem'>
+                <div className='left'>
+                  <p>4</p>
                   <div>
-                    <p>Gunel Mammadova</p>
-                    <small>Yaddaş - 64, Rəng - Qara</small>
+                    <i>{Icons.starIconWidth27}</i>
+                    <i>{Icons.starIconWidth27}</i>
+                    <i>{Icons.starIconWidth27}</i>
+                    <i>{Icons.starIconWidth27}</i>
+                    <i>{Icons.starIconWidth27}</i>
                   </div>
-                  <span>5 gün əvvəl</span>
                 </div>
-                <div className='commentItemBody'>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-                    mattis viverra lacus ut et, etiam. Vel ut in nunc nunc ut sit nibh
-                    tortor sit. Consectetur sit auctor odio quis suspendisse tincidunt quis.
-                    Et tristique amet aenean nibh porttitor quis aliquam integer.
-                    Consectetur lacus, volutpat malesuada libero. Sollicitudin libero pharetra a.
-                  </p>
+                <div className='right'>
+                  <div className='commentItemHeader'>
+                    <div className='text-center'>
+                      <p>Gunel Mammadova</p>
+                      <small>Yaddaş - 64, Rəng - Qara</small>
+                    </div>
+                    <span className='d-none d-md-block'>5 gün əvvəl</span>
+                  </div>
+                  <div className='commentItemBody'>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                      mattis viverra lacus ut et, etiam. Vel ut in nunc nunc ut sit nibh
+                      tortor sit. Consectetur sit auctor odio quis suspendisse tincidunt quis.
+                      Et tristique amet aenean nibh porttitor quis aliquam integer.
+                      Consectetur lacus, volutpat malesuada libero. Sollicitudin libero pharetra a.
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </li>
-            <li className='commentItem'>
-              <div className='left'>
-                <p>4</p>
-                <div>
-                  <i>{Icons.starIconWidth27}</i>
-                  <i>{Icons.starIconWidth27}</i>
-                  <i>{Icons.starIconWidth27}</i>
-                  <i>{Icons.starIconWidth27}</i>
-                  <i>{Icons.starIconWidth27}</i>
-                </div>
-              </div>
-              <div className='right'>
-                <div className='commentItemHeader'>
+              </li>
+              <li className='commentItem'>
+                <div className='left'>
+                  <p>4</p>
                   <div>
-                    <p>Gunel Mammadova</p>
-                    <small>Yaddaş - 64, Rəng - Qara</small>
+                    <i>{Icons.starIconWidth27}</i>
+                    <i>{Icons.starIconWidth27}</i>
+                    <i>{Icons.starIconWidth27}</i>
+                    <i>{Icons.starIconWidth27}</i>
+                    <i>{Icons.starIconWidth27}</i>
                   </div>
-                  <span>5 gün əvvəl</span>
                 </div>
-                <div className='commentItemBody'>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-                    mattis viverra lacus ut et, etiam. Vel ut in nunc nunc ut sit nibh
-                    tortor sit. Consectetur sit auctor odio quis suspendisse tincidunt quis.
-                    Et tristique amet aenean nibh porttitor quis aliquam integer.
-                    Consectetur lacus, volutpat malesuada libero. Sollicitudin libero pharetra a.
-                  </p>
+                <div className='right'>
+                  <div className='commentItemHeader'>
+                    <div className='text-center'>
+                      <p>Gunel Mammadova</p>
+                      <small>Yaddaş - 64, Rəng - Qara</small>
+                    </div>
+                    <span className='d-none d-md-block'>5 gün əvvəl</span>
+                  </div>
+                  <div className='commentItemBody'>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                      mattis viverra lacus ut et, etiam. Vel ut in nunc nunc ut sit nibh
+                      tortor sit. Consectetur sit auctor odio quis suspendisse tincidunt quis.
+                      Et tristique amet aenean nibh porttitor quis aliquam integer.
+                      Consectetur lacus, volutpat malesuada libero. Sollicitudin libero pharetra a.
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
 
-      <div className='row'>
-        <div className='col-12'>
-          <div className='commentForm'>
-            <h4>Rəy Bildir</h4>
-            <form>
-              <div className='row'>
-                <div className='col-6'>
-                  <div className="mb-3">
-                    <label className="form-label">Ad</label>
-                    <input type={'text'} className="form-control" placeholder='Adınızı daxil edin' />
+        <div className='row'>
+          <div className='col-12'>
+            <div className='commentForm'>
+              <h4>Rəy Bildir</h4>
+              <form>
+                <div className='row'>
+                  <div className='col-12 col-md-6'>
+                    <div className="mb-3">
+                      <label className="form-label">Ad</label>
+                      <input type={'text'} className="form-control" placeholder='Adınızı daxil edin' />
+                    </div>
+                  </div>
+
+                  <div className='col-12 col-md-6'>
+                    <div className="mb-3">
+                      <label className="form-label">Soyad</label>
+                      <input type={'text'} className="form-control" placeholder='Soyadınızı daxil edin' />
+                    </div>
+                  </div>
+
+                </div>
+
+                <div className='row'>
+                  <div className='col-12'>
+                    <label className="form-label">Rəy bildirdiyiniz məhsulu seçin</label>
+                    <select className="form-select" aria-label="Default select example">
+                      <option selected>Məhsulu seçin</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
                   </div>
                 </div>
 
-                <div className='col-6'>
-                  <div className="mb-3">
-                    <label className="form-label">Soyad</label>
-                    <input type={'text'} className="form-control" placeholder='Soyadınızı daxil edin' />
+                <div className='row'>
+                  <div className='col-12'>
+                    <label className="form-label">Rəyinizi yazın</label>
+                    <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                   </div>
                 </div>
 
-              </div>
-
-              <div className='row'>
-                <div className='col-12'>
-                  <label  className="form-label">Rəy bildirdiyiniz məhsulu seçin</label>
-                  <select className="form-select" aria-label="Default select example">
-                    <option selected>Məhsulu seçin</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className='row'>
-                <div className='col-12'>
-                <label  className="form-label">Rəyinizi yazın</label>
-                  <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                </div>
-              </div>
-
-              <button type="submit" className="btn btn-primary">Rəyini bildir</button>
-            </form>
+                <button type="submit" className="btn btn-primary">Rəyini bildir</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

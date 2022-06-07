@@ -2,48 +2,92 @@ import React, { useEffect, useState } from 'react'
 import { Outlet, Link } from 'react-router-dom'
 import * as Icons from '../../assets/Icons/Icons'
 import commerce from '../../Ecommerce'
+import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom'
+import { Spinner } from "react-bootstrap";
 
 function Checkout({ cart }) {
 
+  let navigate = useNavigate()
+
   const [stepform, setStepForm] = useState(1)
-  const [data, setData] = useState({})
+  const [data, setData] = useState({
+    personalInfo: {},
+    addressInfo: {},
+    pay_type: "",
+  });
   const [checkoutToken, setcheCkoutToken] = useState({})
 
   const generateCheckoutToken = async () => {
     if (cart.total_items > 0) {
       await commerce.checkout.generateToken(cart.id, { type: 'cart' })
-        .then((token) => { setcheCkoutToken({ checkoutToken: token }) })
+        .then((token) => {
+          setcheCkoutToken(token)
+        })
     }
   }
 
   const refreshCart = () => {
-    commerce.cart.refresh().then((newCart) => {setcheCkoutToken({cart: newCart})})
+    commerce.cart.refresh().then((newCart) => {
+      setcheCkoutToken({ cart: newCart })
+    })
   };
 
+  let line_items = checkoutToken.line_items
+  let line_items_new = []
+
+  if (line_items != undefined ) {
+    line_items.forEach(e => {
+      line_items_new.push({ [e.id]: { quantity: e.quantity } })
+    });
+  }
+  
+  const [bntloading, setBtnloading] = useState(true)
+
   const handleCaptureCheckout = () => {
-    const orderData = {
-      line_items: cart.line_items,
+    setBtnloading(false)
+    commerce.checkout.capture(`${checkoutToken.id}`, {
+      line_items: {
+        ...line_items_new
+      },
       customer: {
-        firstname: data.name,
-        lastname: data.surname,
-        email: data.email,
-        phone_number: {
-          provayder: data.phone_number.provayder,
-          number: data.phone_number.number
-        }
+        firstname: data.personalInfo.name,
+        lastname: data.personalInfo.surname,
+        email: data.personalInfo.email,
       },
       shipping: {
-        street: data.address,
-        apartment: data.apartment,
-        courier_message: data.courier_message
+        name: data.personalInfo.name + data.personalInfo.surname,
+        street: data.addressInfo.apartment,
+        town_city: data.addressInfo.address
       },
-      fulfillment: {
-        shipping_method: data.pay_type
+      payment: {
+        gateway: 'test_gateway',
+        card: {
+          number: '4242 4242 4242 4242',
+          expiry_month: '01',
+          expiry_year: '2023',
+          cvc: '123',
+          postal_zip_code: '94103',
+        },
       }
-    };
-    setcheCkoutToken(data => ({ ...data, orderData }));
-    window.sessionStorage.setItem('order_receipt', JSON.stringify(checkoutToken)); 
-    refreshCart();
+    })
+      .then(response => {
+        setBtnloading(true)
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Sifariş qeydə alındı',
+          showConfirmButton: false,
+          timer: 3500
+        })
+        setTimeout(() => {
+          navigate('/')
+        }, 4000);
+
+      })
+      .catch(error =>
+        console.log(error)
+      );
   };
 
 
@@ -73,7 +117,7 @@ function Checkout({ cart }) {
             </div>
 
             <div className="row">
-              <div className="col-9">
+              <div className="col-12 col-md-9">
                 <span>Ödəmə</span>
                 <div className="steps">
                   <div id="stepOne" className="formSteps">
@@ -101,11 +145,13 @@ function Checkout({ cart }) {
                     </div>
                     {stepform === 3 ? <StepThree
                       setData={setData}
-                      handleCaptureCheckout={handleCaptureCheckout} /> : null}
+                      bntloading={bntloading}
+                      handleCaptureCheckout={handleCaptureCheckout}
+                      data={data} /> : null}
                   </div>
                 </div>
               </div>
-              <div className="col-3">
+              <div className="col-12 col-md-3">
                 <Amounts subTotal={cart.subtotal} />
               </div>
             </div>
@@ -131,10 +177,15 @@ function Checkout({ cart }) {
 
 export const StepOneData = ({ data }) => {
   return (
-    <div id='stepOneData'>
-      <p>{data.name} {data.surname}</p>
-      <p>({data.phone_number.provayder}) {data.phone_number.number}</p>
-      <p>{data.email}</p>
+    <div id="stepOneData">
+      <p>
+        {data.personalInfo.name} {data.personalInfo.surname}
+      </p>
+      <p>
+        ({data.personalInfo.phone_number.provayder}){" "}
+        {data.personalInfo.phone_number.number}
+      </p>
+      <p>{data.personalInfo.email}</p>
     </div>
   )
 }
@@ -142,49 +193,51 @@ export const StepOneData = ({ data }) => {
 export const StepTwoData = ({ data }) => {
   return (
     <div id='stepTwoData'>
-      <p>{data.address}</p>
-      <p>{data.apartment}</p>
-      <p>{data.courier_message}</p>
+      <p>{data.addressInfo.address}</p>
+      <p>{data.addressInfo.apartment}</p>
+      <p>{data.addressInfo.courier_message}</p>
     </div>
   )
 }
 
 export const StepOne = ({ setStepForm, setData, data }) => {
 
-  const [nameInput, setNameInput] = useState('')
-  const [surnameInput, setSurnameInput] = useState('')
-  const [emailInput, setEmailInput] = useState('')
-  const [provayderInput, setProvayderInput] = useState('')
-  const [numberInput, setNumberInput] = useState('')
+  const [nameInput, setNameInput] = useState(data.personalInfo.name);
+  const [surnameInput, setSurnameInput] = useState(data.personalInfo.surname);
+  const [emailInput, setEmailInput] = useState(data.personalInfo.email);
+  const [provayderInput, setProvayderInput] = useState(
+    data.personalInfo.phone_number?.provayder
+  );
+  const [numberInput, setNumberInput] = useState(
+    data.personalInfo.phone_number?.number
+  );
 
   const saveButton = () => {
-    setStepForm((step) => step + 1)
-
-    setData(
-      {
+    setStepForm((step) => step + 1);
+    setData({
+      ...data,
+      personalInfo: {
         name: nameInput,
         surname: surnameInput,
         phone_number: {
           provayder: provayderInput,
-          number: numberInput
+          number: numberInput,
         },
-        email: emailInput
-      }
-    )
-  }
-
-  // console.log(data)
+        email: emailInput,
+      },
+    });
+  };
 
   return (
     <>
       <div className='body_formsteps'>
         <div className='form'>
           <div className='row'>
-            <div className='col-6'>
+            <div className='col-12 col-md-6'>
               <div className="mb-3">
                 <label className="form-label">Ad</label>
                 <input
-                  defaultValue={data.name}
+                  defaultValue={data.personalInfo.name}
                   name='name'
                   required
                   onChange={(e) => setNameInput(e.target.value)}
@@ -192,12 +245,12 @@ export const StepOne = ({ setStepForm, setData, data }) => {
                   placeholder='Adınızı daxil edin' />
               </div>
             </div>
-            <div className='col-6'>
+            <div className='col-12 col-md-6'>
               <div className="mb-3">
                 <label className="form-label">Soyad</label>
                 <input
                   name='surname'
-                  defaultValue={data.surname}
+                  defaultValue={data.personalInfo.surname}
                   required
                   onChange={(e) => setSurnameInput(e.target.value)}
                   type={'text'} className="form-control"
@@ -206,11 +259,14 @@ export const StepOne = ({ setStepForm, setData, data }) => {
             </div>
           </div>
           <div className='row'>
-            <div className='col-6'>
+            <div className='col-12 col-md-6'>
               <div className="mb-3">
                 <label className="form-label">Mobil nömrə</label>
                 <div className='phonenumberinput'>
-                  <select required onChange={(e) => setProvayderInput(e.target.value)} aria-label="Default select example">
+                  <select required
+                    onChange={(e) => setProvayderInput(e.target.value)}
+                    value={provayderInput}
+                    aria-label="Default select example">
                     <option>(000)</option>
                     <option defaultValue="077">077</option>
                     <option defaultValue="070">070</option>
@@ -224,16 +280,17 @@ export const StepOne = ({ setStepForm, setData, data }) => {
                     required
                     onChange={(e) => setNumberInput(e.target.value)}
                     type={'tel'} className="form-control"
+                    value={numberInput}
                     placeholder='000-00-00' />
                 </div>
               </div>
             </div>
-            <div className='col-6'>
+            <div className='col-12 col-md-6'>
               <div className="mb-3">
                 <label className="form-label">E-mail</label>
                 <input
                   required
-                  defaultValue={data.email}
+                  defaultValue={data.personalInfo.email}
                   onChange={(e) => setEmailInput(e.target.value)}
                   type={"email"} className="form-control"
                   placeholder='nümunə@gmail.com' />
@@ -251,44 +308,46 @@ export const StepOne = ({ setStepForm, setData, data }) => {
 
 export const StepTwo = ({ setStepForm, setData, data }) => {
 
-  const [address, setAddress] = useState()
-  const [apartment, setApartment] = useState()
-  const [couriermessage, setCourierMessage] = useState()
+  const [address, setAddress] = useState(data.addressInfo.address);
+  const [apartment, setApartment] = useState(data.addressInfo.apartment);
+  const [couriermessage, setCourierMessage] = useState(
+    data.addressInfo.courier_message
+  );
 
   const saveButton = () => {
-    setStepForm((step) => step + 1)
+    setStepForm((step) => step + 1);
 
     let addData = {};
 
     addData = {
       address: address,
       apartment: apartment,
-      courier_message: couriermessage
+      courier_message: couriermessage,
     };
-    setData(data => ({
+    setData({
       ...data,
-      ...addData
-    }));
-  }
+      addressInfo: addData,
+    });
+  };
 
   return (
     <div className='body_formsteps'>
       <div className='form'>
         <div className='row'>
-          <div className='col-6'>
+          <div className='col-12 col-md-6'>
             <div className="mb-3">
               <label className="form-label">Ünvan</label>
               <input
-                defaultValue={data.address}
+                defaultValue={data.addressInfo.address}
                 type={'text'} onChange={(e) => setAddress(e.target.value)}
                 className="form-control" placeholder='Ünvanı daxil edin' />
             </div>
           </div>
-          <div className='col-6'>
+          <div className='col-12 col-md-6'>
             <div className="mb-3">
               <label className="form-label">Bina/Mənzil</label>
               <input
-                defaultValue={data.apartment} type={'text'}
+                defaultValue={data.addressInfo.apartment} type={'text'}
                 onChange={(e) => setApartment(e.target.value)}
                 className="form-control" placeholder='Daxil edin' />
             </div>
@@ -298,7 +357,7 @@ export const StepTwo = ({ setStepForm, setData, data }) => {
           <div className='col-12'>
             <label className="form-label">Kuryer üçün əlavə qeydlər</label>
             <textarea
-              defaultValue={data.courier_message}
+              defaultValue={data.addressInfo.courier_message}
               className="form-control" onChange={(e) => setCourierMessage(e.target.value)}
               placeholder="Mətni daxil edin..." id="floatingTextarea"></textarea>
           </div>
@@ -312,36 +371,47 @@ export const StepTwo = ({ setStepForm, setData, data }) => {
   )
 }
 
-export const StepThree = ({ setData, handleCaptureCheckout }) => {
-  let card_btn = document.getElementsByClassName('pay_type_btn')[0]
-  let cash_btn = document.getElementsByClassName('pay_type_btn')[1]
-
-  const payTypeCash = () => {
-
-    if (card_btn !== undefined && cash_btn !== undefined) {
-      card_btn.classList.remove("active_payTypeBtn")
-      cash_btn.classList.add('active_payTypeBtn')
-    }
-    setData(data => ({ ...data, ...{ pay_type: 'cash' } }));
-  }
-
-  const payTypeCard = () => {
-    if (card_btn !== undefined && cash_btn !== undefined) {
-      card_btn.classList.add("active_payTypeBtn")
-      cash_btn.classList.remove("active_payTypeBtn")
-    }
-    setData(data => ({ ...data, ...{ pay_type: 'card' } }));
-  }
+export const StepThree = ({ setData, handleCaptureCheckout, data, bntloading }) => {
+  const selectPaymentType = (e) => {
+    let btns = document.querySelectorAll(".pay_type_btn");
+    [...btns].forEach((btn) => btn.classList.remove("active_payTypeBtn"));
+    e.target.classList.add("active_payTypeBtn");
+    setData((data) => ({ ...data, pay_type: e.target.name }));
+  };
 
   return (
     <div className='body_formsteps'>
       <div className='form'>
         <div className='pay_type_btns'>
-          <button onClick={() => payTypeCard()} className='pay_type_btn'> {Icons.cardIcon} Onlayn kart ilə ödəmə </button>
-          <button onClick={() => payTypeCash()} className='pay_type_btn'> {Icons.moneyIcon} Qapıda nağd ödəmə</button>
+          <button onClick={selectPaymentType}
+            className={
+              data.pay_type === "card"
+                ? "pay_type_btn active_payTypeBtn"
+                : "pay_type_btn"
+            }
+            name="card"> {Icons.cardIcon} Onlayn kart ilə ödəmə </button>
+          <button onClick={selectPaymentType}
+            className={
+              data.pay_type === "cash"
+                ? "pay_type_btn active_payTypeBtn"
+                : "pay_type_btn"
+            }
+            name="cash"> {Icons.moneyIcon} Qapıda nağd ödəmə</button>
         </div>
         <div className='d-flex justify-content-center'>
-          <button onClick={()=>handleCaptureCheckout()} className='save_btn'>Təsdiq et</button>
+          <button
+            onClick={() => handleCaptureCheckout()}
+            className='save_btn'>
+            {bntloading ? "Təsdiq et" : (
+              <Spinner
+                as="span"
+                animation="grow"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            )}
+          </button>
         </div>
       </div>
     </div>
