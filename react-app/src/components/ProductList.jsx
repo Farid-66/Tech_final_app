@@ -2,17 +2,13 @@ import { Outlet, Link } from "react-router-dom";
 import * as Icons from '../assets/Icons/Icons'
 import { addToFavourite } from '../Redux/Favourite/favourite-slice.js'
 import { useSelector, useDispatch } from 'react-redux'
+
 function ProtuctList(props) {
 
   // Favourite =============
   const favourite = useSelector((state) => state.favourite)
   const dispatch = useDispatch()
   // =======================
-
-
-
-
-
   return (
     <>
       <section id="products">
@@ -22,7 +18,7 @@ function ProtuctList(props) {
               <div className="header-product">
                 <p>{props.title}</p>
                 <Link to={`/products/${props.cat}`}>
-                  Hamısına bax <i class="fa-solid fa-angle-right"></i>
+                  Hamısına bax <i className="fa-solid fa-angle-right"></i>
                 </Link>
               </div>
 
@@ -31,7 +27,7 @@ function ProtuctList(props) {
                   <div className="productlist">
                     {props.loading ? (
                       props.products.map((e) => (
-                        <div div className="product-card">
+                        <div key={e.id} className="product-card">
                           <div className="product-fovarite">
                             <button
                               onClick={() => dispatch(addToFavourite(e))}>
@@ -53,8 +49,8 @@ function ProtuctList(props) {
                       ))
                     ) : (
                       <div className="loading">
-                        <div class="spinner-border" role="status">
-                          <span class="visually-hidden">Loading...</span>
+                        <div className="spinner-border" role="status">
+                          <span className="visually-hidden">Loading...</span>
                         </div>
                       </div>
                     )}

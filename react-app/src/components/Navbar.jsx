@@ -4,51 +4,23 @@ import commerce from "../Ecommerce";
 import * as Icons from '../assets/Icons/Icons'
 import { useSelector, useDispatch } from 'react-redux'
 
-function Navbar({ cartTotalItems }) {
+function Navbar({ cartTotalItems, user }) {
     const [isOpen, setIsOpen] = useState("onHoverCloseMenuPage")
     const [brand, setBrand] = useState([])
-    const [Id, setId] = useState()
+    const [slug, setSlug] = useState()
 
     const favourite = useSelector((state) => state.favourite)
 
-    // useEffect(() => {
-    //     commerce.categories.retrieve('mobile', { type: 'slug' })
-    //         .then((category) => setBrand(category.children));
-    // }, [])
-
-
-    const onHover = (id) => {
-        setIsOpen("onHoverOpenMenuPge")
-        setId(id)
-    }
-
-    const url = new URL(
-        "https://api.chec.io/v1/categories/cat_ZM8X5n6BJ5pv4q"
-    );
-
-    let params = {
-        "depth": "2",
-    };
-
-    Object.keys(params)
-        .forEach(key => url.searchParams.append(key, params[key]));
-
-    let headers = {
-        "X-Authorization": "sk_424315286c0f23285f9dd296cbf3b4ce3b653598609b3",
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-    };
-
-
-
     useEffect(() => {
-        fetch(url, {
-            method: "GET",
-            headers: headers,
-        })
-            .then(response => response.json())
-            .then(json => setBrand(json.children));
+        commerce.categories.retrieve('brands', { type: 'slug' })
+            .then((category) => setBrand(category.children));
     }, [])
+
+
+    const onHover = (slug) => {
+        setIsOpen("onHoverOpenMenuPge")
+        setSlug(slug)
+    }
 
     return (
         <>
@@ -57,7 +29,7 @@ function Navbar({ cartTotalItems }) {
                     <div className='row'>
                         <div className='col-12'>
                             <div className='d-flex'>
-                                <button className='menu-btn'><i class="fa-solid fa-bars"></i></button>
+                                <button className='menu-btn'><i className="fa-solid fa-bars"></i></button>
                                 <div className='logo'>
                                     <Link to={'/home'}><img src={require('../../src/assets/Images/Tello.png')} alt="not found" />
                                         <span>Tello</span>
@@ -68,23 +40,36 @@ function Navbar({ cartTotalItems }) {
                                 <Search />
                             </div>
                             <div>
-                                <User cartTotalItems={cartTotalItems} favouriteLength = {favourite.length} />
+                                <User
+                                    cartTotalItems={cartTotalItems}
+                                    favouriteLength={favourite.length}
+                                    user = {user}
+                                />
                             </div>
                         </div>
                     </div>
-
                     <div className='row'>
                         <div className='col-12'>
                             <div className='navbar' >
                                 <ul className='nav-items' >
+                                    <li
+                                        className='nav-item' >
+                                        <Link to={`/products/newPhone`}>Yeni</Link>
+                                    </li>
                                     {
                                         brand.map((e) => (
                                             <li key={e.id}
-                                                className='nav-item' onMouseEnter={() => onHover(e.id)} onMouseLeave={() => setIsOpen("onHoverCloseMenuPage")} >
-                                                {e.name}
+                                                className='nav-item'
+                                                onMouseEnter={() => onHover(e.slug)}
+                                                onMouseLeave={() => setIsOpen("onHoverCloseMenuPage")} >
+                                                <Link to={`/products/${e.slug}`}>{e.name}</Link>
                                             </li>
                                         ))
                                     }
+                                    <li
+                                        className='nav-item' >
+                                        <Link to={`/products/accessories`}>Aksessuarlar</Link>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -95,56 +80,29 @@ function Navbar({ cartTotalItems }) {
                 <div className='container'>
                     <div className='row'>
                         <div className='col-12'>
-                            <MenuPape isOpen={isOpen} id={Id} setIsOpen={setIsOpen} />
+                            <MenuPape
+                                isOpen={isOpen}
+                                slug={slug}
+                                setIsOpen={setIsOpen}
+                            />
                         </div>
                     </div>
                 </div>
             </div>
-
         </>
     )
 }
 
 
 
-function MenuPape({ isOpen, id, setIsOpen }) {
+function MenuPape({ isOpen, slug, setIsOpen }) {
 
-    const [subItem, setSubItem] = useState([])
-
-    const url = new URL(
-        `https://api.chec.io/v1/categories/${id}`
-    );
-
-    let params = {
-        "depth": "2",
-    };
-
-    Object.keys(params)
-        .forEach(key => url.searchParams.append(key, params[key]));
-
-    let headers = {
-        "X-Authorization": "sk_424315286c0f23285f9dd296cbf3b4ce3b653598609b3",
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-    };
-
-    // console.log(url)
-    useEffect(() => {
-        fetch(url, {
-            method: "GET",
-            headers: headers,
-        })
-            .then(response => response.json())
-            .then(json => setSubItem(json));
-    }, [])
-
-    // console.log(subItem)
     return (
         <div className={isOpen}
             onMouseEnter={() => setIsOpen("onHoverOpenMenuPge")}
             onMouseLeave={() => setIsOpen("onHoverCloseMenuPage")}>
             <ul>
-                {/* {subItem!=undefined?subItem.children.map((e)=>(<li>{e.name}</li>)):""} */}
+                {/* {subItem!=undefined?(subItem.map((e)=>(<li>{e.name}</li>))):""} */}
             </ul>
         </div>
     )
@@ -154,23 +112,26 @@ function MenuPape({ isOpen, id, setIsOpen }) {
 function Search() {
     return (
         <div className='search'>
-            <i class="fa-solid fa-magnifying-glass"></i>
+            <i className="fa-solid fa-magnifying-glass"></i>
             <input type={'text'} placeholder="Axtarış..." />
         </div>
     )
 }
 
 
-function User({ cartTotalItems, favouriteLength }) {
+function User({ cartTotalItems, favouriteLength , user}) {
     return (
         <>
             <div className='users'>
                 <ul>
-                    <li className='user'><Link to="/login">{Icons.userIcon} </Link></li>
-                    <li className='favourite'><Link to={'/favourite'}>{Icons.heartIcon} {favouriteLength>0?<span>{favouriteLength}</span>:""} </Link></li>
+                    {(localStorage.getItem("commercejs_customer_token")? 
+                    <li className='user'><Link to="/profile">Salam {user!=undefined? user.firstname:""} <i className="fa-solid fa-angle-right"></i></Link></li> 
+                    : <li className='user'><Link to="/login">{Icons.userIcon} </Link></li>)}
+                    
+                    <li className='favourite'><Link to={'/favourite'}>{Icons.heartIcon} {favouriteLength > 0 ? <span>{favouriteLength}</span> : ""} </Link></li>
                     <li className='cart'>
                         <Link to="/cart">
-                            {Icons.black_basketIcon} {cartTotalItems>0?<span>{cartTotalItems}</span>:""}
+                            {Icons.black_basketIcon} {cartTotalItems > 0 ? <span>{cartTotalItems}</span> : ""}
                         </Link>
                     </li>
                 </ul>
@@ -179,8 +140,6 @@ function User({ cartTotalItems, favouriteLength }) {
         </>
     )
 }
-
-
 
 
 export default Navbar

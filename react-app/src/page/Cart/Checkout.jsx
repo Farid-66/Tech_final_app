@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import { Spinner } from "react-bootstrap";
 
-function Checkout({ cart }) {
+function Checkout({ cart, user }) {
 
   let navigate = useNavigate()
 
@@ -36,12 +36,12 @@ function Checkout({ cart }) {
   let line_items = checkoutToken.line_items
   let line_items_new = []
 
-  if (line_items != undefined ) {
+  if (line_items != undefined) {
     line_items.forEach(e => {
       line_items_new.push({ [e.id]: { quantity: e.quantity } })
     });
   }
-  
+
   const [bntloading, setBtnloading] = useState(true)
 
   const handleCaptureCheckout = () => {
@@ -86,7 +86,12 @@ function Checkout({ cart }) {
 
       })
       .catch(error =>
-        console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Xəta baş verdi!'
+        })
+
       );
   };
 
@@ -127,7 +132,7 @@ function Checkout({ cart }) {
                         {stepform > 1 ? <button onClick={() => setStepForm(1)}>Düzəliş et</button> : null}
                       </div>
                     </div>
-                    {stepform === 1 ? <StepOne setData={setData} data={data} setStepForm={setStepForm} /> : <StepOneData data={data} />}
+                    {stepform === 1 ? <StepOne setData={setData} user={user} data={data} setStepForm={setStepForm} /> : <StepOneData data={data} />}
                   </div>
                   <div id="stepTwo" className="formSteps">
                     <div className="title_formsteps">
@@ -200,17 +205,15 @@ export const StepTwoData = ({ data }) => {
   )
 }
 
-export const StepOne = ({ setStepForm, setData, data }) => {
+export const StepOne = ({ setStepForm, setData, data , user }) => {
 
-  const [nameInput, setNameInput] = useState(data.personalInfo.name);
-  const [surnameInput, setSurnameInput] = useState(data.personalInfo.surname);
-  const [emailInput, setEmailInput] = useState(data.personalInfo.email);
-  const [provayderInput, setProvayderInput] = useState(
-    data.personalInfo.phone_number?.provayder
-  );
-  const [numberInput, setNumberInput] = useState(
-    data.personalInfo.phone_number?.number
-  );
+  const [nameInput, setNameInput] = useState(user?user.firstname:data.personalInfo.name);
+  const [surnameInput, setSurnameInput] = useState(user!=undefined?user.lastname:data.personalInfo.surname);
+  const [emailInput, setEmailInput] = useState(user!=undefined?user.email:data.personalInfo.email);
+  const [provayderInput, setProvayderInput] = useState(data.personalInfo.phone_number?.provayder);
+  const [numberInput, setNumberInput] = useState(data.personalInfo.phone_number?.number);
+
+  console.log(user)
 
   const saveButton = () => {
     setStepForm((step) => step + 1);
@@ -237,7 +240,7 @@ export const StepOne = ({ setStepForm, setData, data }) => {
               <div className="mb-3">
                 <label className="form-label">Ad</label>
                 <input
-                  defaultValue={data.personalInfo.name}
+                  defaultValue={user?user.firstname:data.personalInfo.name}
                   name='name'
                   required
                   onChange={(e) => setNameInput(e.target.value)}
@@ -250,7 +253,7 @@ export const StepOne = ({ setStepForm, setData, data }) => {
                 <label className="form-label">Soyad</label>
                 <input
                   name='surname'
-                  defaultValue={data.personalInfo.surname}
+                  defaultValue={user!=undefined?user.lastname:data.personalInfo.surname}
                   required
                   onChange={(e) => setSurnameInput(e.target.value)}
                   type={'text'} className="form-control"
@@ -290,7 +293,7 @@ export const StepOne = ({ setStepForm, setData, data }) => {
                 <label className="form-label">E-mail</label>
                 <input
                   required
-                  defaultValue={data.personalInfo.email}
+                  defaultValue={user!=undefined?(user.email):(data.personalInfo.email)}
                   onChange={(e) => setEmailInput(e.target.value)}
                   type={"email"} className="form-control"
                   placeholder='nümunə@gmail.com' />

@@ -11,9 +11,9 @@ function Favourite() {
   const favourite = useSelector((state) => state.favourite)
   const dispatch = useDispatch()
   let favouriteLength = favourite.length
-  console.log(favourite)
+
   return (
-    favouriteLength > 0 ? (<>
+    <>
       <section id="productspage">
         <div className="container">
           <div className="row">
@@ -21,18 +21,18 @@ function Favourite() {
               <ul className="pageHeader">
                 <li>
                   <Link to="/home">
-                    {Icons.homeIcon} <i class="fa-solid fa-angle-right"></i>
+                    {Icons.homeIcon} <i className="fa-solid fa-angle-right"></i>
                   </Link>{" "}
                 </li>
                 <li>
                   <a href="#">
-                    Seçilmişlər
+                    Bəyəndiklərim
                   </a>
                 </li>
               </ul>
             </div>
           </div>
-          <div className="row">
+          {favouriteLength>0?(<div className="row">
             <div className="col-12">
               <div className="row">
                 {favourite.map((e) => (
@@ -60,12 +60,13 @@ function Favourite() {
                 ))}
               </div>
             </div>
-          </div>
+          </div>):(
+            <div><p className='display-2'>Bəyəndiklərim</p></div>
+          )}
         </div>
       </section>
       <Outlet />
-    </>) :
-      ("secilmi.ler bosdur")
+    </>
   )
 }
 

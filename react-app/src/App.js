@@ -14,6 +14,7 @@ import Register from './page/Register/Register'
 import Favourite from './page/Favourite/Favourite';
 import Changepass from './page/Register/Changepass';
 import Profile from './page/Profile/Profile';
+import Auth from './page/Register/auth';
 import Swal from 'sweetalert2'
 
 function App() {
@@ -26,7 +27,6 @@ function App() {
       setCart(cart)
     })
   }
-
 
   const Toast = Swal.mixin({
     toast: true,
@@ -45,8 +45,6 @@ function App() {
       })
     })
   }
-
-
 
   const handleRemoveFromCart = (lineItemId) => {
     Swal.fire({
@@ -79,18 +77,49 @@ function App() {
   }
 
 
-  useEffect(() => {
-    fetchCart();
-  }, []);
   // ====================================================
 
+  // ================ Customer =================== 
 
+  const [users, setUsers] = useState([])
+
+  const url = new URL(
+    "https://api.chec.io/v1/customers"
+  );
+
+  let headers = {
+    "X-Authorization": "sk_424315286c0f23285f9dd296cbf3b4ce3b653598609b3",
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+  };
+
+  function fetchCustomer() {
+    fetch(url, {
+      method: "GET",
+      headers: headers,
+    })
+      .then(response => response.json())
+      .then(json => setUsers(json.data));
+  }
+
+  const thisCustomer = users
+    .find((users) => users.id === localStorage
+      .getItem("commercejs_customer_id"))
+
+  // console.log(thisCustomer)
+  // =============================================
+
+
+  useEffect(() => {
+    fetchCart();
+    fetchCustomer();
+  }, []);
 
 
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar cartTotalItems={cart.total_items} />
+        <Navbar cartTotalItems={cart.total_items} user={thisCustomer} />
         <Routes>
           <Route path='/'>
             <Route index element={<Home />} />
@@ -103,11 +132,12 @@ function App() {
             />} />
             <Route path="products/:cat" element={<Products />} />
             <Route path="login" element={<Login />} />
+            <Route path="auth/:token" element={<Auth />} />
             <Route path="changepassword" element={<Changepass />} />
             <Route path="register" element={<Register />} />
             <Route path="favourite" element={<Favourite />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="checkout/" element={<Checkout cart={cart} />} />
+            <Route path="profile/*" element={<Profile user={thisCustomer} />} />
+            <Route path="checkout/" element={<Checkout cart={cart} user={thisCustomer} />} />
             <Route path="prducts/:productsId" element={<Details addToCart={handleAddToCart} />} />
           </Route>
         </Routes>

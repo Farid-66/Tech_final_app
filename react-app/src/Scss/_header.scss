@@ -1,5 +1,6 @@
 header {
     .container {
+        background-image: url("../assets/Images/Rectangle\ 156\ \(1\).jpg");
         .carousel-indicators {
             button {
                 background: $text-green;
@@ -41,7 +42,7 @@ header {
 @media (max-width: 576px) {
     header {
         .container {
-            .carousel-indicators {}
+            // .carousel-indicators {}
 
             .carousel-inner {
                 .row {

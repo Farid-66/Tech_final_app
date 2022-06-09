@@ -3,12 +3,15 @@ import commerce from "../../Ecommerce";
 import { Outlet, Link } from "react-router-dom";
 import { Accordion } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { addToFavourite } from '../../Redux/Favourite/favourite-slice'
+import { useSelector, useDispatch } from 'react-redux'
 import * as Icons from '../../assets/Icons/Icons'
 
 function Products() {
   const { cat } = useParams();
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
+
 
   const fetchProducts = async () => {
     const category = cat ? cat : "phone";
@@ -19,7 +22,6 @@ function Products() {
     setLoading(true);
   };
 
-
   //  Sort=========================
 
   const getSort = () => {
@@ -28,76 +30,73 @@ function Products() {
     switch (option) {
       case "1":
         setProduct([...product.sort((a, b) => new Date(b.created) - new Date(a.created))])
-        console.log("date")
         break
       case "2":
         setProduct([...product.sort((a, b) => (a.price.raw > b.price.raw ? 1 : -1))])
-        console.log("low")
         break
       case "3":
         setProduct([...product.sort((a, b) => (a.price.raw > b.price.raw ? -1 : 1))])
-        console.log("high")
         break
     }
   }
 
+  // Favourite =============
+  const favourite = useSelector((state) => state.favourite)
+  const dispatch = useDispatch()
+  // =======================
+
   useEffect(() => {
     fetchProducts();
-  }, []);
+    setLoading(false);
+  }, [cat]);
 
-  console.log(product)
 
   return (
-    <>
-      <section id="productspage">
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <ul className="pageHeader">
-                <li>
-                  <Link to="/home">
-                    {Icons.homeIcon} <i class="fa-solid fa-angle-right"></i>
-                  </Link>{" "}
-                </li>
-                <li>
-                  <a href="#">
-                    Telefonlar <i class="fa-solid fa-angle-right"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    Apple <i class="fa-solid fa-angle-right"></i>
-                  </a>
-                </li>
-              </ul>
+    loading ? (
+      <>
+        <section id="productspage">
+          <div className="container">
+            <div className="row">
+              <div className="col-12">
+                <ul className="pageHeader">
+                  <li>
+                    <Link to="/home">
+                      {Icons.homeIcon} <i className="fa-solid fa-angle-right"></i>
+                    </Link>
+                  </li>
+                  <li>
+                    {cat[0].toUpperCase() + cat.substring(1)}
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-3">
-              <Filter />
-            </div>
-
-            <div className="col-9">
-              <div className="select d-flex justify-content-between">
-                <span>{product.length} məhsul tapıldı</span>
-
-                <select class="form-select" id="sort" onChange={() => getSort()}>
-                  <option value="1">Yenilər</option>
-                  <option value="2">Ucuzdan-bahaya</option>
-                  <option value="3">Bahadan-ucuza</option>
-                </select>
+            <div className="row">
+              <div className="col-12 col-md-3 d-none d-md-block">
+                <Filter />
               </div>
 
-              <div>
-                <div className="row">
-                  {loading ? (
-                    product.map((e) => (
-                      <div key={e.id} className="col-4 products">
-                        <Link to={`/prducts/${e.id}`}>
-                          <div className="product-card">
-                            <div className="product-fovarite">
-                              <button>{Icons.heartIcon}</button>
-                            </div>
+              <div className="col-12 col-md-9">
+                <div className="select d-flex justify-content-between ">
+                  <span>{product.length} məhsul tapıldı</span>
+                  <select className="form-select" id="sort" onChange={() => getSort()}>
+                    <option value="1">Yenilər</option>
+                    <option value="2">Ucuzdan-bahaya</option>
+                    <option value="3">Bahadan-ucuza</option>
+                  </select>
+                </div>
+
+                <div>
+                  <div className="row">
+                    {product.map((e) => (
+                      <div key={e.id} className="col-6 col-md-4">
+                        <div div className="product-card">
+                          <div className="product-fovarite">
+                            <button
+                              onClick={() => dispatch(addToFavourite(e))}>
+                              {favourite.find((prod) => prod.id == e.id) ? Icons.redheartIcon : Icons.heartIcon}
+                            </button>
+                          </div>
+                          <Link key={e.id} to={`/prducts/${e.id}`}>
                             <div className="prodct-img">
                               <img src={e.image.url} alt="not found" />
                             </div>
@@ -107,32 +106,39 @@ function Products() {
                             <div className="prodct-price">
                               <span>{e.price.formatted_with_code}</span>
                             </div>
-                          </div>
-                        </Link>
+                          </Link>
+                        </div>
                       </div>
-                    ))
-                  ) : (
-                    <div class="spinner-border" role="status">
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
-                  )}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        </section>
+        <Outlet />
+      </>) : (
+      <div className='container loading-detailpage'>
+        <div className='row'>
+          <div className='col-12'>
+            <div className="text-center">
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
-      <Outlet />
-    </>
-  );
+      </div>
+    ));
 }
+
 
 export const Filter = () => {
   const [brand, setBrand] = useState([]);
 
   const fetchBrand = async () => {
     commerce.categories
-      .retrieve("mobile", { type: "slug" })
+      .retrieve("brands", { type: "slug" })
       .then((category) => setBrand(category.children));
   };
 
@@ -148,14 +154,14 @@ export const Filter = () => {
         <Accordion.Body>
           <ul>
             {brand.map((e) => (
-              <div key={e.id} class="form-check">
+              <div key={e.id} className="form-check">
                 <input
-                  class="form-check-input"
+                  className="form-check-input"
                   type="checkbox"
                   value=""
                   id="flexCheckDefault"
                 />
-                <label class="form-check-label" for="flexCheckDefault">
+                <label className="form-check-label" htmlFor="flexCheckDefault">
                   {e.name}
                 </label>
               </div>

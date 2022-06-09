@@ -46,9 +46,23 @@ function Register() {
       body: JSON.stringify(body)
     })
       .then(response => response.json())
-      .then(data => console.log(data));
-
-
+      .then(data => (data.status_code==422?(
+        Swal.fire({
+          icon: 'warning',
+          title: 'Oops...',
+          text: 'Eyni e-poçt ünvanı olan müştəri hesabı artıq mövcuddur.',
+          footer: '<a href="login">Daxil olun </a>'
+        })
+      ):(
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Qeydiyyat təsdiq olundu',
+          showConfirmButton: false,
+          timer: 2500
+        },
+        navigate("/login"))
+      )));
   }
 
   return (

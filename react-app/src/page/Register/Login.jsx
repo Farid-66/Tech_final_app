@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Outlet, Link } from 'react-router-dom'
 import * as Icons from '../../assets/Icons/Icons'
 import commerce from "../../Ecommerce";
+import Swal from 'sweetalert2'
 
 function Login() {
 
@@ -19,8 +20,15 @@ function Login() {
     const [emailInput, setEmailInput] = useState()
 
     const LogIn = () => {
-        commerce.customer.login(emailInput, 'http://localhost:3000')
-            .then((token) => console.log(token));
+        commerce.customer.login(emailInput, `http://localhost:3000/auth/`)
+            .then((token) => (token.success ? (
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Təsdiq linki e-poçtunuza göndərildi. Zəhmət olmasa təsdiqləyin',
+                    showConfirmButton: false,
+                    timer: 3500
+                })) : ("")));
     }
 
     return (
@@ -49,7 +57,7 @@ function Login() {
                                     placeholder='nümunə@gmail.com' />
                             </div>
                             <div className="password_input mb-3">
-                                <label className="form-label">Soyad</label>
+                                <label className="form-label">Şifrə</label>
                                 <input
                                     required
                                     type={passChangetext ? 'password' : 'text'} className="form-control"

@@ -11,12 +11,12 @@ export const favouriteSlice = createSlice({
             if (findIndex === -1) {
                 state.push({ ...payload });
             } else {
-                state = state.filter(product => product.id !== payload.id)
+                // state.filter((product) => product.id != payload.id)
+                return [...state.filter((product) => product.id != payload.id)]
             }
         }
     }
 })
-
 
 
 export const { addToFavourite } = favouriteSlice.actions

@@ -20,7 +20,7 @@ function Header() {
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Felis malesuada et leo faucibus </p>
                                 </div>
                                 <div className='col-12 col-md-6 col-xl-6'>
-                                    <img src={require('../../src/assets/Images/image1.jpg')} alt="not found"/>
+                                    <img src={require('../../src/assets/Images/image 1.jpg')} alt="not found"/>
                                 </div>
                             </div>
                         </div>
@@ -32,7 +32,7 @@ function Header() {
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Felis malesuada et leo faucibus </p>
                                 </div>
                                 <div className='col-12 col-md-6 col-xl-6'>
-                                    <img src={require('../../src/assets/Images/image1.jpg')} alt="not found"/>
+                                    <img src={require('../../src/assets/Images/image 1.jpg')} alt="not found"/>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +44,7 @@ function Header() {
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Felis malesuada et leo faucibus </p>
                                 </div>
                                 <div className='col-12 col-md-6 col-xl-6'>
-                                    <img src={require('../../src/assets/Images/image1.jpg')} alt="not found"/>
+                                    <img src={require('../../src/assets/Images/image 1.jpg')} alt="not found"/>
                                 </div>
                             </div>
                         </div>

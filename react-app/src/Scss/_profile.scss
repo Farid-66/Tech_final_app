@@ -1,139 +1,305 @@
 #profilepage {
-    background-color: #f9f9f9;
-    padding: 40px 0px 160px 0px;
+  background-color: #f9f9f9;
+  padding: 40px 0px 160px 0px;
 
-    .container {
-        .row {
-            .col-3 {
-                .profile_nav {
-                    padding: 32px 24px;
-                    background-color: white;
-                    border-radius: 8px;
+  .container {
+    .row {
+      .col-3 {
+        .profile_nav {
+          padding: 32px 24px;
+          background-color: white;
+          border-radius: 8px;
 
-                    h3 {
-                        font-size: 20px;
-                        font-weight: 500;
-                        margin-bottom: 32px;
-                    }
+          h3 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 32px;
+          }
 
-                    .pnav_items {
-                        list-style-type: none;
-                        padding: unset;
+          .pnav_items {
+            list-style-type: none;
+            padding: unset;
 
-                        .pnav_item {
-                            i {
-                                margin-right: 18px;
-                            }
-                            span {
-                                font-size: 15px;
-                                font-weight: 500;
-                            }
-                            a{
-                                text-decoration: none;
-                                color: $text-black;
-                                &:hover {
-                                    color: rgba(45, 208, 110, 1);
-                                }
-                            }
-
-                            margin-bottom: 32px;
-                        }
-                    }
-
-                    .pnav_item:nth-child(5) {
-                        margin: unset;
-                    }
+            .pnav_item {
+              i {
+                margin-right: 18px;
+              }
+              span {
+                font-size: 15px;
+                font-weight: 500;
+              }
+              a {
+                text-decoration: none;
+                color: $text-black;
+                &:hover {
+                  color: rgba(45, 208, 110, 1);
                 }
+              }
+
+              button {
+                border: unset;
+                background: transparent;
+                color: $text-black;
+                &:hover {
+                  color: rgba(45, 208, 110, 1);
+                }
+              }
+
+              margin-bottom: 32px;
             }
+          }
+
+          .pnav_item:nth-child(5) {
+            margin: unset;
+          }
         }
+      }
     }
+  }
 }
 
 #my_orders {
-    .title {
-        h3 {
-            font-weight: 500;
-            font-size: 20px;
-            margin-bottom: 18px;
-        }
-    }
+  .title {
+    h3 {
+      font-weight: 500;
+      font-size: 20px;
+      margin-bottom: 18px;
 
-    .emptyorders {
-        width: 100%;
-        height: 375px;
+      a{
+        color: $text-black;
+      }
+    }
+  }
+
+  .orders {
+    .col-6 {
+        margin-bottom: 24px;
+      .order_box {
+        padding: 60px 32px 32px 8px;
         background: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
         border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-        p {
-            font-size: 16px;
-            font-weight: 500;
-            color: rgba(189, 189, 189, 1);
-            margin-top: 48px;
+        .order_img {
+          img {
+            width: 170px;
+          }
         }
+
+        .order_texts {
+          margin-left: 8px;
+          .order_text {
+            margin-bottom: 24px;
+            span {
+              color: rgba(130, 130, 130, 1);
+              font-weight: 600;
+              display: block;
+              margin-bottom: 8px;
+              font-size: 12px;
+            }
+            p{
+                font-weight: bold;
+            }
+          }
+
+          .order_text:nth-child(1) {
+            p {
+              color: rgba(79, 79, 79, 1);
+            }
+          }
+          .order_text:nth-child(3) {
+            p {
+              color: $text-red;
+            }
+          }
+
+          a {
+            text-decoration: none;
+            border-radius: 8px;
+            padding: 10px 22px;
+            display: inline-block;
+            color: rgba(79, 79, 79, 1);
+            background-color: rgba(242, 242, 242, 1);
+          }
+        }
+      }
     }
+  }
+
+  .orderdetail{
+    width: 100%;
+    background-color: white;
+    border-radius: 8px;
+    padding:0px 32px;
+
+
+    .orderdetail_about{
+      display: flex;
+      border-bottom: 1px solid rgba(189, 189, 189, 1);
+      padding: 32px 0px;
+      .orderdetail_image{
+        img{
+          width: 170px;
+        }
+        margin-right: 56px;
+      }
+
+      .orderdetail_name{
+        p:nth-child(1){
+          font-size: 18px;
+          font-weight: 500;
+          margin-bottom: 28px;
+        }
+
+        p+div{
+          display: flex;
+          div{
+            margin-right: 105px;
+            span{
+              color: rgba(130, 130, 130, 1);
+              font-size: 12px;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
+
+    .orderdetail_address{
+      display: flex;
+      border-bottom: 1px solid rgba(189, 189, 189, 1);
+      padding: 32px 0px 16px;
+      justify-content: space-between;
+      p{
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 24px;
+      }
+
+      ul{
+        list-style-type: none;
+        li{
+          margin-bottom: 12px;
+        }
+      }
+    }
+
+    .orderdetail_pay{
+      display: flex;
+      border-bottom: 1px solid rgba(189, 189, 189, 1);
+      padding: 32px 0px 16px;
+      flex-direction: column;
+      p{
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 24px;
+      }
+
+      ul{
+        list-style-type: none;
+
+        li{
+          width: 100%;
+          margin-bottom: 16px;
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+
+    .total{
+      display: flex;
+      justify-content: space-between;
+      padding: 32px 0px;
+      p{
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      p:nth-child(2){
+        color: $text-red;
+      }
+    }
+  }
+
+  .emptyorders {
+    width: 100%;
+    height: 375px;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 8px;
+
+    p {
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(189, 189, 189, 1);
+      margin-top: 48px;
+    }
+  }
 }
 
 #personalInfo {
-    .title {
-        h3 {
-            font-weight: 500;
-            font-size: 20px;
-            margin-bottom: 18px;
-        }
+  .title {
+    h3 {
+      font-weight: 500;
+      font-size: 20px;
+      margin-bottom: 18px;
     }
+  }
 
-    .personalinfo {
-        width: 100%;
-        background: white;
-        padding: 32px 0px;
+  .personalinfo {
+    width: 100%;
+    background: white;
+    padding: 32px 0px;
+    border-radius: 8px;
+
+    .container {
+      label {
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: $text-gray;
+      }
+
+      input {
+        background-color: rgba(242, 242, 242, 1);
+        padding: 12px 16px;
         border-radius: 8px;
+        color: rgba(130, 130, 130, 1);
+        border: unset;
+      }
 
-        .container {
-            label {
-                margin-bottom: 8px;
-                font-weight: 500;
-                color: $text-gray;
-            }
+      .edit_personalInfo_Btn {
+        display: flex;
+        justify-content: center;
 
-            input {
-                background-color: rgba(242, 242, 242, 1);
-                padding: 12px 16px;
-                border-radius: 8px;
-                color: rgba(130, 130, 130, 1);
-                border: unset;
-            }
-
-            .edit_personalInfo_Btn {
-                display: flex;
-                justify-content: center;
-
-                button {
-                    padding: 14px 80px;
-                    background-color: $text-green;
-                    color: white;
-                    margin-top: 32px;
-                    border-radius: 8px;
-                    font-weight: 500;
-                    border: unset;
-                }
-            }
+        button {
+          padding: 14px 80px;
+          background-color: $text-green;
+          color: white;
+          margin-top: 32px;
+          border-radius: 8px;
+          font-weight: 500;
+          border: unset;
         }
+      }
     }
+  }
 }
 
 .profile_page_loading {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    border-radius: 8px;
-    height: 370px;
-    .spinner-border {
-        color: $text-green;
-    }
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 8px;
+  height: 370px;
+  .spinner-border {
+    color: $text-green;
+  }
 }
