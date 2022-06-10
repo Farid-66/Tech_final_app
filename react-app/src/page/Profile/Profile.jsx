@@ -80,32 +80,30 @@ export const MyOrders = ({ userdata }) => {
         commerce.customer.getOrders(userdata.id).then((orders) => setOrders(orders.data));
     }, [])
 
-
-    const line_items = []
-    orders.map((curVal) => {
-        let suborder = curVal.order
-        suborder.line_items.forEach(el => {
-            line_items.push({
-                id: curVal.id,
-                created: curVal.created,
-                status: curVal.status,
-                line_item_id: el.id,
-                product_id: el.product_id,
-                product_name: el.product_name,
-                price: el.price.formatted_with_code,
-                image: el.image.url
+    if (orders != undefined) {
+        const line_items = []
+        orders.map((curVal) => {
+            let suborder = curVal.order
+            suborder.line_items.forEach(el => {
+                line_items.push({
+                    id: curVal.id,
+                    created: curVal.created,
+                    status: curVal.status,
+                    line_item_id: el.id,
+                    product_id: el.product_id,
+                    product_name: el.product_name,
+                    price: el.price.formatted_with_code,
+                    image: el.image.url
+                })
             })
-        })
-    });
+        });
 
-
-    return (
-        <>
-            <section id='my_orders'>
-                <div className='title'>
-                    <h3>{line_items.length > 0 ? ("Sifarişlərim (" + line_items.length + " məhsul)") : ("Sifarişlərim")} </h3>
-                </div>
-                {line_items.length > 0 ? (
+        return (
+            <>
+                <section id='my_orders'>
+                    <div className='title'>
+                        <h3>{("Sifarişlərim (" + line_items.length + " məhsul)")}</h3>
+                    </div>
                     <div className='orders'>
                         <div className='row'>
                             {line_items.map((e) => (
@@ -134,17 +132,24 @@ export const MyOrders = ({ userdata }) => {
                             ))}
                         </div>
                     </div>
-                ) : (
-                    <div className='emptyorders'>
-                        <img src={require('../../assets/Images/shopping-cart.jpg')} />
-                        <p>Səbətinizdə hazırda heç bir sifarişiniz yoxdur</p>
-                    </div>
-                )}
+                </section>
+                <Outlet />
+            </>
+        )
+    }
+    else {
+        return (
+            <section id='my_orders'>
+                <div className='title'>
+                    <h3>Sifarişlərim</h3>
+                </div>
+                <div className='emptyorders'>
+                    <img src={require('../../assets/Images/shopping-cart.jpg')} />
+                    <p>Səbətinizdə hazırda heç bir sifarişiniz yoxdur</p>
+                </div>
             </section>
-            <Outlet />
-        </>
-    )
-
+        )
+    }
 }
 
 export const PersonalInformation = ({ userdata }) => {
@@ -250,12 +255,12 @@ export const OrderDetial = ({ userdata }) => {
 
     const thisdetail = orderDetail.find((prod) => prod.id === ordId)
 
-    if (thisdetail != undefined) {
-        return (
-            <>
-                <section id='my_orders'>
-                    <div className='title'>
-                        <h3><Link to={'/profile/order'}><i className="fa-solid fa-arrow-left"></i></Link> Sifarişin detalları</h3>
+    return (
+        <>
+            <section id='my_orders'>
+                <div className='title'>
+                    <h3><Link to={'/profile/order'}><i className="fa-solid fa-arrow-left"></i></Link> Sifarişin detalları</h3>
+                    {thisdetail != undefined ? (
                         <div className='orderdetail'>
                             {(thisdetail.order.line_items).map((e) => (
                                 <div key={e.id} className='orderdetail_about'>
@@ -314,17 +319,24 @@ export const OrderDetial = ({ userdata }) => {
                                 <p>{thisdetail.order_value.formatted_with_code}</p>
                             </div>
                         </div>
-                    </div>
-                </section>
-                <Outlet />
-            </>
-        )
-    }
-    else {
-        return (
-            <div></div>
-        )
-    }
+                    ) : (
+                        <div className='container loading-detailpage'>
+                            <div className='row'>
+                                <div className='col-12'>
+                                    <div className="text-center">
+                                        <div className="spinner-border" role="status">
+                                            <span className="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </section>
+            <Outlet />
+        </>
+    )
 }
 
 

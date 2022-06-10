@@ -106,7 +106,6 @@ function App() {
     .find((users) => users.id === localStorage
       .getItem("commercejs_customer_id"))
 
-  // console.log(thisCustomer)
   // =============================================
 
 

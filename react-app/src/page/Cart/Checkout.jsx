@@ -130,6 +130,7 @@ function Checkout({ cart, user }) {
                       <h2>1. Şəxsi məlumatlar</h2>
                       <div>
                         {stepform > 1 ? <button onClick={() => setStepForm(1)}>Düzəliş et</button> : null}
+                        <span className={stepform>1?"status_ready":"status_open"}><i className="fa-solid fa-check"></i></span>
                       </div>
                     </div>
                     {stepform === 1 ? <StepOne setData={setData} user={user} data={data} setStepForm={setStepForm} /> : <StepOneData data={data} />}
@@ -139,6 +140,7 @@ function Checkout({ cart, user }) {
                       <h2>2. Çatdırılma</h2>
                       <div>
                         {stepform > 2 ? <button onClick={() => setStepForm(2)}>Düzəliş et</button> : null}
+                        <span className={stepform>2?"status_ready":stepform==2?"status_open":null}><i className="fa-solid fa-check"></i></span>
                       </div>
                     </div>
                     {stepform === 2 ? <StepTwo setStepForm={setStepForm} data={data} setData={setData} /> : null}
@@ -147,6 +149,9 @@ function Checkout({ cart, user }) {
                   <div id="stepThree" className="formSteps">
                     <div className="title_formsteps">
                       <h2>3. Ödəmə üsulu</h2>
+                      <div>
+                      <span className={stepform>=3?"status_open":null}><i className="fa-solid fa-check"></i></span>
+                      </div>
                     </div>
                     {stepform === 3 ? <StepThree
                       setData={setData}
@@ -212,8 +217,6 @@ export const StepOne = ({ setStepForm, setData, data , user }) => {
   const [emailInput, setEmailInput] = useState(user!=undefined?user.email:data.personalInfo.email);
   const [provayderInput, setProvayderInput] = useState(data.personalInfo.phone_number?.provayder);
   const [numberInput, setNumberInput] = useState(data.personalInfo.phone_number?.number);
-
-  console.log(user)
 
   const saveButton = () => {
     setStepForm((step) => step + 1);

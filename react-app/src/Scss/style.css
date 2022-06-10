@@ -1719,6 +1719,55 @@ header .container .carousel-inner .carousel-item .row .col-12 h2 {
   font-weight: 500;
 }
 
+#chckoutPage .container .row .col-md-9 .steps .formSteps .title_formsteps h2 + div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#chckoutPage .container .row .col-md-9 .steps .formSteps .title_formsteps span {
+  margin-left: 30px;
+  padding: 3px 4px;
+  background: white;
+  border-radius: 50%;
+  color: #4f4f4f;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border: 1px solid #e0e0e0;
+  font-size: 13px;
+}
+
+#chckoutPage .container .row .col-md-9 .steps .formSteps .title_formsteps .status_ready {
+  background: #2dd06e;
+  color: white;
+  border: 1px solid #2dd06e;
+}
+
+#chckoutPage .container .row .col-md-9 .steps .formSteps .title_formsteps .status_open {
+  background: white;
+  color: #2dd06e;
+  border: 1px solid #2dd06e;
+}
+
+#chckoutPage .container .row .col-md-9 .steps .formSteps .title_formsteps .status_close {
+  background: white;
+  color: #4f4f4f;
+  border: 1px solid #4f4f4f;
+}
+
 #chckoutPage .container .row .col-md-9 .steps .formSteps .body_formsteps {
   margin-bottom: 32px;
 }
@@ -1857,6 +1906,18 @@ header .container .carousel-inner .carousel-item .row .col-12 h2 {
 }
 
 @media (max-width: 576px) {
+  #chckoutPage .container .row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+  }
+  #chckoutPage .container .row .col-md-9 {
+    margin-top: 24px;
+  }
   #chckoutPage .container .row .col-md-9 .steps {
     width: 100%;
     padding: 0px 16px;
@@ -2332,7 +2393,7 @@ header .container .carousel-inner .carousel-item .row .col-12 h2 {
   color: #db2c66;
 }
 
-#my_orders .emptyorders {
+.emptyorders {
   width: 100%;
   height: 375px;
   background: white;
@@ -2352,7 +2413,7 @@ header .container .carousel-inner .carousel-item .row .col-12 h2 {
   border-radius: 8px;
 }
 
-#my_orders .emptyorders p {
+.emptyorders p {
   font-size: 16px;
   font-weight: 500;
   color: #bdbdbd;
